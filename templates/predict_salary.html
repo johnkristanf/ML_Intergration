@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Predict Salary</title>
+</head>
+<body class="bg-black">
+
+    <div class="flex flex-col justify-center items-center w-full h-screen text-white">
+
+        <h1 class="text-6xl mb-5">Salary Prediction</h1>
+
+        <form action="#" id="submit_form" method="post" class="flex flex-col  w-[25%] gap-2">
+            <label>Enter Years of Experience:</label>
+            <input type="number" class="experience text-black rounded-md p-2">
+            <button type="submit" class="bg-violet-800 rounded-md p-2 font-bold hover:opacity-75">Predict Salary</button>
+        </form>
+
+    </div>
+
+
+    <script>
+
+        document.querySelector("#submit_form").addEventListener('submit', async (e) => {
+            e.preventDefault()
+
+            const experience = document.querySelector(".experience").value
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ experience: experience })
+            };
+
+            try {
+
+                const response = await fetch('result', options);
+                const data = await response.text();
+
+           
+                if (data) {
+                    Swal.fire({
+                        position: "top-end",
+                        title: "Predicted Salary",
+                        text: `$${data}`,
+                        showConfirmButton: true,
+                    });
+                }
+                
+            } catch (error) {
+                console.error(error)
+            }
+
+            
+        })
+
+    </script>
+
+   
+    
+</body>
+</html>
